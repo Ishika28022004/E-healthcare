@@ -1,0 +1,87 @@
+<%- include('partial/header') %>
+<%- include('partial/navbar') %>
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h1>Doctor Appointment</h1>
+    </div>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+            <form action="/addbooking" method="post">
+                <div class="form-group">
+                    <label for="name">Patient Name</label>
+                    <input type="text" name="name" class="form-control" id="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" readonly value="<%= user[0].email %>" name="email" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" value="<%= user[0].phone %>" name="phone" class="form-control" id="phone">
+                </div>
+                <div class="form-group">
+                   <label for="gender">Gender</label>
+                   <select name="gender" class="form-control" id="gender">
+                       <option value="male">male</option>
+                       <option value="female">female</option>
+                   </select>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" min="1" value="1" name="age" class="form-control" id="age">
+                </div>
+                <div class="form-group">
+                 <label for="userid">Doctorid</label>
+                 <select class="form-control" name="doctorid" id="doctorid">
+                   <% for(var x=0;x< doctor.length; x++){ %>
+                     <option value="<%= doctor[x]._id %>""><%= doctor[x].name %>-<%= doctor[x].phone %></option>
+                   <% } %>
+                 </select>
+              </div>
+              <div class="form-group">
+               <label for="userid">Serviceid</label>
+               <select class="form-control" name="serviceid" id="serviceid" readonly>
+                <% for(var x=0;x< service.length; x++){ %>
+                   <option value="<%= service[x]._id %>"" <%= doctor[0].serviceid == service[x]._id ? 'selected' : '' %>  ><%= service[x].name %></option>
+                 <% } %>
+               </select>
+            </div>
+                <div class="form-group">
+                    <label for="date">Days</label>
+                    <select class="form-control" name="date" id="date">
+                        <option <%= doctor[0].date == 'Monday' ? 'selected' : '' %>>Monday</option>
+                        <option <%= doctor[0].date == 'Tuesday' ? 'selected' : '' %>>Tuesday</option>
+                        <option <%= doctor[0].date == 'Wednesday' ? 'selected' : '' %>>Wednesday</option>
+                        <option <%= doctor[0].date == 'Thursday' ? 'selected' : '' %>Thursday</option>
+                        <option <%= doctor[0].date == 'Friday' ? 'selected' : '' %>>Friday</option>
+                        <option <%= doctor[0].date == 'Saturday' ? 'selected' : '' %>>Saturday</option>
+                        <option <%= doctor[0].date == 'Sunday' ? 'selected' : '' %>>Sunday</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="time">Time</label>
+                    <input type="time" value="<%= doctor[0].time %>" name="time" class="form-control" id="time">
+                </div>
+                <div class="form-group">
+                   <input type="hidden" value="<%= user[0]._id %>" name="userid" class="form-control" id="userid">
+                </div>
+              <div class="form-group">
+               <label for="amount">Amount</label>
+               <% for(var x=0;x< service.length; x++){ %>
+                <% if(doctor[0].serviceid == service[x]._id){ %> 
+                    <input type="number" readonly name="amount" value="<%= service[x].price %>" class="form-control" id="amount">
+                <% } %>
+              <% } %>
+            </div>
+              <div class="form-group">
+               <label for="status">Mode</label>
+               <select class="form-control" name="mode" id="mode">
+                 <option>Offline</option>
+                 <option>Online</option>
+               </select>
+            </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+    </div>
+</div>
+<%- include('partial/footer') %>    

@@ -1,0 +1,118 @@
+<%- include('partial/header') %>
+      <div class="container-fluid">
+        <div class="row">
+      <%- include('partial/sidebar') %>
+        <div class="col-lg-9">
+           <div class="row">
+           </div>
+           <div class="row">
+            <div class="container" id="content">
+              <div class="row">
+                  <div class="col-md-12">
+                      <h1>Report</h1>
+                      <p>Company Name-Address</p>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <h2>Patient Details</h2>
+                      <p><label for="name">Patient Name</label>-<%= booking.name %></p>
+                      <p><label for="name">Gender</label>-<%= booking.gender %></p>
+                      <p><label for="name">Age</label>-<%= booking.age %></p>
+                      <label for="userid">ServiceName-</label>
+                      <% for(var x=0;x< service.length; x++){ %>
+                          <% if(booking.serviceid == service[x]._id){ %>
+                            <%= service[x].name %>
+                            <% } %>
+                        <% } %>
+                      
+                  </div>
+                  <div class="col-md-6">
+                      <h2>Payment Information</h2>
+                      <p>Amount-<%= booking.amount %></p>
+                      <p>Mode-<%= booking.mode %></p>
+                      <p>PaymentStatus-<%= booking.paymentstatus %></p>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <p><label for="userid">Doctorname</label>
+                        <% for(var x=0;x< doctor.length; x++){ %>
+                          <% if(booking.doctorid == doctor[x]._id){ %>
+                            <%= doctor[x].name %>
+                            <% } %>
+                          <% } %></p>
+                          <p><label for="userid">Specilization</label>
+                          <% for(var x=0;x< doctor.length; x++){ %>
+                            <% if(booking.doctorid == doctor[x]._id){ %>
+                              <%= doctor[x].speciality %>
+                              <% } %>
+                            <% } %></p>
+                          <div class="form-group"> 
+                            <label for="">Report</label>
+                            <textarea class="form-control" name="report" id="" rows="3"><%= booking.report %></textarea>
+                          </div>
+                  </div>
+              </div>
+            </div>
+               <button type="button" class="btn btn-primary" id="download">Download</button>
+               </div>
+           </div>
+        </div>
+    </div>
+      </div>
+      <div class="row fixed-top">
+        <span class="mr-auto"></span>
+        <div class="col-lg-3 ">
+          <% if (msg) { %>
+            <div class="alert alert-danger alert-dismissible fade show " role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+              </button>
+              <strong><%= msg %></strong>
+            </div>
+          <% } %>
+        </div>
+      </div>
+      <script>
+        $(document).ready(function() {
+          // show the alert
+          setTimeout(function() {
+              $(".alert").alert('close');
+          }, 2000);
+      });
+      </script>     
+
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js">
+    </script>
+   <script>
+    const download =
+        document.getElementById('download');
+    const content =
+        document.getElementById('content');
+
+    download.addEventListener
+        ('click', async function () {
+            const filename = 'report.pdf';
+
+            try {
+                const opt = {
+                    margin: 1,
+                    filename: filename,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: {
+                        unit: 'in', format: 'letter',
+                        orientation: 'portrait'
+                    }
+                };
+                await html2pdf().set(opt).
+                    from(content).save();
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        });
+</script>
+ <%- include('partial/footer') %>

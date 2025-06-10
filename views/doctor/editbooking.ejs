@@ -1,0 +1,138 @@
+<%- include('partial/header') %>
+      <div class="container-fluid">
+        <div class="row">
+      <%- include('partial/sidebar') %>
+        <div class="col-lg-9">
+           <div class="row">
+               <div class="col-lg-12">
+                   <h1>Create Booking</h1>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-lg-12">
+                   <form action="/doctors/editbooking" method="post">
+                       <input type="hidden" name="id" value="<%= booking._id %>">
+                       <div class="form-group">
+                           <label for="name">Patient Name</label>
+                           <input type="text" name="name" value="<%= booking.name %>" class="form-control" id="name">
+                       </div>
+                       <div class="form-group">
+                           <label for="email">Email</label>
+                           <input type="email" name="email" value="<%= booking.email %>" class="form-control" id="email">
+                       </div>
+                       <div class="form-group">
+                           <label for="phone">Phone</label>
+                           <input type="text" name="phone" value="<%= booking.phone %>" class="form-control" id="phone">
+                       </div>
+                       <div class="form-group">
+                          <label for="gender">Gender</label>
+                          <select name="gender" class="form-control" id="gender">
+                              <option value="male" <%= booking.gender == 'male' ? 'selected' : '' %>>male</option>
+                              <option value="female" <%= booking.gender == 'female' ? 'selected' : '' %>>female</option>
+                          </select>
+                       </div>
+                       <div class="form-group">
+                           <label for="age">Age</label>
+                           <input type="number" value="<%= booking.age %>" min="1" value="1" name="age" class="form-control" id="age">
+                       </div>
+                       <div class="form-group">
+                        <label for="userid">Doctorid</label>
+                        <select class="form-control" name="doctorid" id="doctorid">
+                          <% for(var x=0;x< doctor.length; x++){ %>
+                            <option value="<%= doctor[x]._id %>" <%= booking.doctorid == doctor[x]._id ? 'selected' : '' %>><%= doctor[x].name %>-<%= doctor[x].phone %></option>
+                          <% } %>
+                        </select>
+                     </div>
+                     <div class="form-group">
+                      <label for="userid">Serviceid</label>
+                      <select class="form-control" name="serviceid" id="serviceid">
+                        <% for(var x=0;x< service.length; x++){ %>
+                          <option value="<%= service[x]._id %>" <%= booking.serviceid == service[x]._id ? 'selected' : '' %>><%= service[x].name %></option>
+                        <% } %>
+                      </select>
+                   </div>
+                       <div class="form-group">
+                           <label for="date">Days</label>
+                           <select class="form-control" name="date" id="date">
+                               <option <%= booking.date == 'Monday' ? 'selected' : '' %>>Monday</option>
+                               <option <%= booking.date == 'Tuesday' ? 'selected' : '' %>>Tuesday</option>
+                               <option <%= booking.date == 'Wednesday' ? 'selected' : '' %>Wednesday</option>
+                               <option <%= booking.date == 'Thursday' ? 'selected' : '' %>>Thursday</option>
+                               <option <%= booking.date == 'Friday' ? 'selected' : '' %>>Friday</option>
+                               <option <%= booking.date == 'Saturday' ? 'selected' : '' %>>Saturday</option>
+                               <option <%= booking.date == 'Sunday' ? 'selected' : '' %>>Sunday</option>
+                           </select>
+                       </div>
+                       <div class="form-group">
+                           <label for="time">Time</label>
+                           <input type="time" value="<%= booking.time %>" name="time" class="form-control" id="time">
+                       </div>
+                       <div class="form-group">
+                          <label for="userid">Userid</label>
+                          <select class="form-control" name="userid" id="userid">
+                            <% for(var x=0;x< user.length; x++){ %>
+                              <option value="<%= user[x]._id %>"" <%= booking.userid == user[x]._id ? 'selected' : '' %>><%= user[x].name %>-<%= user[x].phone %></option>
+                            <% } %>
+                          </select>
+                       </div>
+                       <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" name="status" id="status">
+                          <option value="Pending" <%= booking.status == 'Pending' ? 'selected' : '' %>>Pending</option>
+                          <option value="Approved" <%= booking.status == 'Approved' ? 'selected' : '' %>>Approved</option>
+                          <option value="Reject" <%= booking.status == 'Reject' ? 'selected' : '' %>>Reject</option>
+                        </select>
+                     </div>
+                     <div class="form-group">
+                      <label for="amount">Amount</label>
+                      <input type="number" value="<%= booking.amount %>" name="amount" class="form-control" id="amount">
+                   </div>
+                     <div class="form-group">
+                      <label for="status">Mode</label>
+                      <select class="form-control" name="mode" id="mode">
+                        <option <%= booking.mode == 'Offline' ? 'selected' : '' %>>Offline</option>
+                        <option <%= booking.mode == 'Online' ? 'selected' : '' %>>Online</option>
+                      </select>
+                   </div>
+                   <div class="form-group">
+                    <label for="status">PaymentStatus</label>
+                    <select class="form-control" name="paymentstatus" id="status">
+                      <option <%= booking.paymentstatus == 'Pending' ? 'selected' : '' %>>Pending</option>
+                      <option <%= booking.paymentstatus == 'Approved' ? 'selected' : '' %>>Approved</option>
+                      <option <%= booking.paymentstatus == 'Reject' ? 'selected' : '' %>>Reject</option>
+                    </select>
+                 </div>
+                 <div class="form-group"> 
+                   <label for="">Report</label>
+                   <textarea class="form-control" name="report" id="" rows="3"></textarea>
+                 </div>
+               <button type="submit" class="btn btn-primary">Update</button>
+                   </form>
+               </div>
+           </div>
+        </div>
+    </div>
+      </div>
+      <div class="row fixed-top">
+        <span class="mr-auto"></span>
+        <div class="col-lg-3 ">
+          <% if (msg) { %>
+            <div class="alert alert-danger alert-dismissible fade show " role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+              </button>
+              <strong><%= msg %></strong>
+            </div>
+          <% } %>
+        </div>
+      </div>
+      <script>
+        $(document).ready(function() {
+          // show the alert
+          setTimeout(function() {
+              $(".alert").alert('close');
+          }, 2000);
+      });
+      </script>     
+ <%- include('partial/footer') %>

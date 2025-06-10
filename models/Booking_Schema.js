@@ -1,0 +1,70 @@
+const mongoose=require('mongoose');
+
+const Booking_Schema=new mongoose.Schema({
+    name:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true
+    },
+    phone:{
+        type:String,
+        required:true
+    },
+    gender:{
+        type:String,
+        required:true
+    },
+    age:{
+        type:String,
+        required:true
+    },
+    date:{
+        type:String,
+        required:true
+    },
+    time:{
+        type:String,
+        required:true
+    },
+    userid:{
+        type:String,
+        required:true
+    },
+    doctorid:{
+        type:String,
+        required:true
+    },
+    serviceid:{
+        type:String,
+        required:true
+    },
+    status:{
+        type:String,
+        required:true
+    },
+    amount:{
+        type:String,
+        required:true
+    },
+    mode:{
+        type:String,
+        required:true
+    },
+    paymentstatus:{
+        type:String,
+        required:true
+    },
+    report:{
+        type:String,
+        required:true
+    }
+},
+{
+    timestamps:true,
+    collection:"booking"
+});
+
+module.exports=mongoose.model("booking",Booking_Schema)

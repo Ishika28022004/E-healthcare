@@ -1,0 +1,96 @@
+<%- include('partial/header') %>
+      <div class="container-fluid">
+        <div class="row">
+      <%- include('partial/sidebar') %>
+        <div class="col-lg-9">
+            <table class="table table-striped table-hover">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Userid</th>
+                        <th>Doctor</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th>Mode</th>
+                        <th>Payment Status</th>
+                        <th>Report</th> 
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0;i< booking.length;i++){ %>
+                        <tr>
+                            <td scope="row"><%= booking[i].name %></td>
+                            <td><%= booking[i].email %></td>
+                            <td><%= booking[i].phone %></td>
+                            <td><%= booking[i].gender %></td>
+                            <td><%= booking[i].age %></td>
+                            <td><%= booking[i].date %></td>
+                            <td><%= booking[i].time %></td>
+                            <td>
+                                <% for(var j=0;j< user.length;j++){ %>
+                                    <% if(booking[i].userid==user[j]._id){ %>
+                                        <%= user[j].name %>
+                                    <% } %> 
+                                <% } %>
+                               
+                            </td>
+                            <td>
+                                <% if(booking[i].doctorid==doctor._id){ %>
+                                        <%= doctor.name %>
+                                <% } %> 
+                                
+                            </td>
+                            <td>
+                                <% for(var j=0;j< service.length;j++){ %>
+                                    <% if(booking[i].serviceid==service[j]._id){ %>
+                                        <%= service[j].name %>
+                                    <% } %> 
+                                <% } %>
+                            </td>
+                            <td>
+                                <% if(booking[i].status=="Pending"){ %>
+                                <a href="/doctors/bookingstatus/<%= booking[i]._id %>/<%= booking[i].status %>" ><span class="badge badge-warning"><%= booking[i].status %></span></a>
+                                <% } %>
+                                <% if(booking[i].status=="Approved"){ %>
+                                    <a href="/doctors/bookingstatus/<%= booking[i]._id %>/<%= booking[i].status %>" ><span class="badge badge-success"><%= booking[i].status %></span></a>
+                                <% } %>
+                                <% if(booking[i].status=="Reject"){ %>
+                                    <a href="/doctors/bookingstatus/<%= booking[i]._id %>/<%= booking[i].status %>" ><span class="badge badge-danger"><%= booking[i].status %></span></a>
+                                <% } %>
+
+                            </td>
+                            <td><%= booking[i].amount %></td>
+                            <td><%= booking[i].mode %></td>
+                            <td><% if(booking[i].paymentstatus=="Pending"){ %>
+                                <a href="/doctors/paymentstatus/<%= booking[i]._id %>/<%= booking[i].paymentstatus %>" ><span class="badge badge-warning"><%= booking[i].paymentstatus %></span></a>
+                                <% } %>
+                                <% if(booking[i].paymentstatus=="Approved"){ %>
+                                    <a href="/doctors/paymentstatus/<%= booking[i]._id %>/<%= booking[i].paymentstatus %>" ><span class="badge badge-success"><%= booking[i].paymentstatus %></span></a>
+                                <% } %>
+                                <% if(booking[i].paymentstatus=="Reject"){ %>
+                                    <a href="/doctors/paymentstatus/<%= booking[i]._id %>/<%= booking[i].paymentstatus %>" ><span class="badge badge-danger"><%= booking[i].paymentstatus %></span></a>
+                                <% } %>
+                            </td>
+                            <td><%= booking[i].report %></td>
+                            <td>
+                                <% if(booking[i].report!="-"){ %>
+                                    <a href="/doctors/downloadreport/<%= booking[i]._id %>" class="btn btn-primary">Download</a>
+                                <% } %>
+
+                                <a href="/doctors/editbooking/<%= booking[i].id %>" class="btn btn-primary">Edit</a>
+                            </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+      </div>
+ <%- include('partial/footer') %>

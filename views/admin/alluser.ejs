@@ -1,0 +1,62 @@
+<%- include('partial/header') %>
+      <div class="container-fluid">
+        <div class="row">
+      <%- include('partial/sidebar') %>
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>All User</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">User Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <% for(var i=0;i< user.length;i++){ %>
+                            <tr>
+                                <th scope="row"><%= user[i]._id %></th>
+                                <td><%= user[i].name %></td>
+                                <td><%= user[i].email %></td>
+                                <td><%= user[i].phone %></td>
+                                <td><a href="/admin/deleteuser/<%= user[i].id %>" class="btn btn-danger">Delete</a></td>
+                            </tr>   
+                            <% } %>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+      </div>
+      <div class="row fixed-top">
+        <span class="mr-auto"></span>
+        <div class="col-lg-3 ">
+          <% if (msg) { %>
+            <div class="alert alert-danger alert-dismissible fade show " role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+              </button>
+              <strong><%= msg %></strong>
+            </div>
+          <% } %>
+        </div>
+      </div>
+      <script>
+        $(document).ready(function() {
+          // show the alert
+          setTimeout(function() {
+              $(".alert").alert('close');
+          }, 2000);
+      });
+      </script>    
+ <%- include('partial/footer') %>
